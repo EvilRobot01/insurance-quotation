@@ -67,11 +67,28 @@ Insurance.prototype.calculateQuotation = function(insurance){
 
     //Make it cheaper each year
     price = price - ((difference * 3) * price) / 100;
+
+    //Check protection level
+    const level = insurance.level;
+
+    price = this.calculateLevel(price, level);
+    return price;
 }
 
 //Return year difference
 Insurance.prototype.getYearDifference = function(year){
     return new Date().getFullYear() - year;
+}
+
+//Calculation level base
+Insurance.prototype.calculateLevel(price, level){
+    if(level === 'basic'){
+        price = price * 1.30;
+    }else{
+        price = price * 1.50;
+    }
+    return price;
+
 }
 
 //HTML 
