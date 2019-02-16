@@ -18,6 +18,13 @@ form.addEventListener('submit', function(e){
     const year = document.getElementById('year').value;
     //Read the radio buttons
     const level = document.querySelector('input[name="level"]:checked').value;
+
+    //Check empty fields
+    if(make === '' || year === '' || level ===''){
+        html.displayError('No empty fields');
+    }else{
+
+    }
 });
 }
 
@@ -41,4 +48,22 @@ HTMLUI.prototype.displayYears = function(){
         option.textContent = i;
         selectYears.appendChild(option);
     }
+}
+
+HTMLUI.prototype.displayError = function(message){
+    //create a div
+    const div = document.createElement('div');
+    div.classList = 'error';
+
+    //insert the message
+    div.innerHTML = `
+    <p>${message}</p>
+    `;
+
+    form.insertBefore(div, document.querySelector('.form-group'));
+
+    //Remove error
+    setTimeout(function(){
+        document.querySelector('.error').remove();
+    }, 3000);
 }
