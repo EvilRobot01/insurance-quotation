@@ -23,6 +23,9 @@ form.addEventListener('submit', function(e){
     if(make === '' || year === '' || level ===''){
         html.displayError('No empty fields');
     }else{
+        //Make the quotation
+        const insurance = new Insurance(make, year, level);
+        const price = insurance.calculateQuotation(insurance);
 
     }
 });
@@ -30,6 +33,48 @@ form.addEventListener('submit', function(e){
 
 
 //Objects
+
+//Quotation and calculation
+function Insurance(make, year, level){
+    this.make = make;
+    this.year = year;
+    this.level = level;
+}
+//Calculate price
+Insurance.prototype.calculateQuotation = function(insurance){
+    let price;
+    const base = 2000;
+
+    //get the make
+    const make = insurance.make;
+
+    switch(make){
+        case '1':
+                price = base * 1.15;
+                break;
+        case '2':
+                price = base * 1.05;
+                break;
+        case '3':
+                price = base * 1.35;
+                break;
+    }
+
+    //Get the year
+    const year = insurance.year;
+
+    const difference = this.getYearDifference(year);
+
+    //Make it cheaper each year
+    price = price - ((difference * 3) * price) / 100;
+}
+
+//Return year difference
+Insurance.prototype.getYearDifference = function(year){
+    return new Date().getFullYear() - year;
+}
+
+//HTML 
 function HTMLUI(){}
 
 //Display lates 20 years
